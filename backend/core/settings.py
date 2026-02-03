@@ -74,8 +74,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'betsmart_db',
+        'USER' : 'smart_admin',
+        'PASSWORD' : 'u3b8f7c0@',
+        'HOST': '127.0.0.1', # No WSL2, o localhost é 127.0.0.1
+        'PORT': '5432',
     }
 }
 
