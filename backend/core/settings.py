@@ -40,16 +40,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Apps de terceiros
-    'rest_framework',
     'corsheaders',
+    'rest_framework',
     # Seus Apps
     'analyses',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    'django.middleware.common.CommonMiddleware', # O CORS deve vir antes deste
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -132,6 +133,19 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173", # Porta padrão do Vite/Vue
     "http://127.0.0.1:5173",
 ]
+
+# Adicione isso também para permitir o envio de cabeçalhos como o Authorization
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "authorization",
+    "content-type",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
+
+# Caso queira facilitar o teste local (opcional):
+CORS_ALLOW_ALL_ORIGINS = True
 
 # 2. Configuração básica do REST Framework
 REST_FRAMEWORK = {
