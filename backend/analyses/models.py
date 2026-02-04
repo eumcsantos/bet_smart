@@ -1,11 +1,19 @@
 from django.db import models
+from .services import BettingEngine
 
 class Match(models.Model):
     # --- Informações Básicas da Partida ---
     home_team = models.CharField(max_length=100, verbose_name="Time Mandante")
     away_team = models.CharField(max_length=100, verbose_name="Time Visitante")
     favorite_team = models.CharField(max_length=100, verbose_name="Time Favorito")
+    league = models.CharField(
+        max_length=100, 
+        choices=[(k, k.replace('_', ' ')) for k in BettingEngine.LEAGUE_MEANS.keys()],
+        default='Brasileirao',
+        verbose_name="Campeonato"
+    )
     match_date = models.DateField(verbose_name="Data da Partida")
+    is_away = models.BooleanField(default=False, verbose_name="Favorito é Visitante?")
     created_at = models.DateTimeField(auto_now_add=True)
 
     # --- Dados de Entrada (Últimas 5 Partidas) ---
