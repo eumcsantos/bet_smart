@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -134,11 +135,17 @@ CORS_ALLOWED_ORIGINS = [
 
 # 2. Configuração básica do REST Framework
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny', # Por enquanto, liberado para testes
+        'rest_framework.permissions.IsAuthenticated', # Bloqueia tudo por padrão
     ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-    ],
+}
+
+# Configurações específicas do SimpleJWT
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60), # Token vale por 1 hora
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),    # Refresh vale por 1 dia
+    'AUTH_HEADER_TYPES': ('Bearer',),
 }

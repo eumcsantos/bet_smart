@@ -1,3 +1,4 @@
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from .models import Match
@@ -10,6 +11,9 @@ class MatchViewSet(viewsets.ModelViewSet):
     POST: Recebe dados, calcula predições via Engine e salva.
     GET: Retorna a lista de análises para o Dashboard.
     """
+    # Esta linha garante que APENAS usuários com Token JWT válido acessem os dados
+    permission_classes = [IsAuthenticated]
+    
     queryset = Match.objects.all().order_by('-created_at')
     serializer_class = MatchSerializer
 
