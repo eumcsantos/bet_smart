@@ -125,3 +125,20 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# 1. Configuração do CORS (para permitir que o Frontend acesse o Backend)
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173", # Porta padrão do Vite/Vue
+    "http://127.0.0.1:5173",
+]
+
+# 2. Configuração básica do REST Framework
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny', # Por enquanto, liberado para testes
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+}
